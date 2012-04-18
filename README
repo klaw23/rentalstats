@@ -1,0 +1,1 @@
+An App Engine app for crawling craigslist and graphing stats on the apartment rental market. It's currently configured for San Francisco, but it could be easily reconfigured for other cities.
