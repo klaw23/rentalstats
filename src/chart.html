@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        // Vars needed: x_label, axis_names, rows
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', "{{ x_label }}");
+        {% for axis_name in axis_names %}
+          data.addColumn('number', "{{ axis_name }}")
+        {% endfor %}
+        data.addRows({{ rows|length }});
+        {% for row in rows %}
+          {% for cell in row %}
+            {% if forloop.first %}
+              data.setValue({{ forloop.parentloop.counter0 }},
+                  {{ forloop.counter0 }}, "{{ cell }}");
+            {% else %}
+              data.setValue({{ forloop.parentloop.counter0 }},
+                  {{ forloop.counter0 }}, {{ cell }});
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(data, {width: 1200, height: 600, title: '{{ title }}'});
+      }
+    </script>
+  </head>
+
+  <body>
+    <div id="chart_div"></div>
+  </body>
+</html>

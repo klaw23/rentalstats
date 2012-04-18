@@ -1,0 +1,4 @@
+cron:
+- description: craigslist crawl
+  url: /crawl
+  schedule: every 60 minutes
