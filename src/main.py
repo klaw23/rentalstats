@@ -163,16 +163,23 @@ class Crawl(webapp.RequestHandler):
     listings_html = urllib2.urlopen(BASE_URL).readlines()
 
     # Parse the listings.
-    matcher = re.compile(r'.*\<a href=\"(\S*)\"\>(.*)\<\/a\>.*\((.*)\)')
+    matcher = re.compile(r'.*\<a href=\"(\S*)\"\>(.*)\<\/a\>')
     num_listings = 0
-    for line in listings_html:
+    for i in xrange(len(listings_html)):
+      line = listings_html[i]
       match = matcher.match(line)
       if match:
         url = match.group(1)
         title = unicode(match.group(2), 'utf-8')
         price = getPrice(title)
-        neighborhood = match.group(3)
         bedrooms = getBedrooms(title)
+        
+        # Neighborhood is listed 2 lines down.
+        neighborhood_match = re.match('.*\((.*)\)', listings_html[i + 2])
+        if not neighborhood_match:
+          continue
+        neighborhood = neighborhood_match.group(1)
+        
         if url and title and price and neighborhood and bedrooms:
           # Save the listing if it's new or missing information.
           listing = Listing.get_by_key_name(url)
