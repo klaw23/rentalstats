@@ -1,0 +1,9 @@
+# emacs
+*~
+
+# python
+*.pyc
+
+# eclipse
+.project
+.pydevproject
