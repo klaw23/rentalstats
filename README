@@ -1,1 +1,3 @@
+IMPORTANT: Craigslist now blocks google app engine, so this no longer works out of the box. The parser should still be valid if you want to run your own service.
+
 An App Engine app for crawling craigslist and graphing stats on the apartment rental market. It's currently configured for San Francisco, but it could be easily reconfigured for other cities. The app works by crawling craigslist hourly, parsing listings by neighborhood, and storing them in the database. Historical trends are displayed using the Google chart API. See http://rentalstats.appspot.com for an example.
